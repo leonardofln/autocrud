@@ -5,53 +5,53 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
 	<meta charset="utf-8">
 	<title>gerar autocrud</title>
-
-	<style type="text/css">
-
-	::selection { background-color: #E13300; color: white; }
-	::-moz-selection { background-color: #E13300; color: white; }
-
-	body {
-		background-color: #fff;
-		margin: 40px;
-		font: 13px/20px normal Helvetica, Arial, sans-serif;
-		color: #4F5155;
+	<link rel="stylesheet" type="text/css" href="/css/estilo.css">
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript">
+	function passo2() {
+		$("#passo2").attr("action", "passo1");
+		$("#passo2").submit();
 	}
-
-	a {
-		color: #003399;
-		background-color: transparent;
-		font-weight: normal;
+	function passo3() {
+		$("#passo2").submit();
 	}
-
-	</style>
+	</script>
 </head>
 <body>
 
-<fieldset>
-	<legend>Campos</legend>
-	<table>
-		<?php
-		foreach ($campos as $campo) {
-		 	echo "<tr>\n";
-			echo " <td><input type=\"checkbox\" checked=\"checked\"></td>\n";
-			if ($campo->primary_key) {
-				echo " <td>chave primária</td>\n";
-			} else {
-				echo " <td><input type=\"text\"></td>\n";
-			}
-			echo " <td>" . $campo->name . "</td>\n";
-			echo "</tr>\n";
+<?php
+$attributes = array('id'=>'passo2');
+echo form_open('autocrud/passo3', $attributes);
+?>
+
+<?php echo form_fieldset('Campos'); ?>
+<table>
+	<?php
+	foreach ($campos as $campo) {
+	 	echo "<tr>\n";
+		echo " <td><input type=\"checkbox\" checked=\"checked\"></td>\n";
+		if ($campo->primary_key) {
+			echo " <td>chave primária</td>\n";
+		} else {
+			echo " <td>" . form_input($campo->name) . "</td>\n";
 		}
-		?>
-		
-	</table>
-</fieldset>
+		echo " <td>" . $campo->name . "</td>\n";
+		echo "</tr>\n";
+	}
+	?>
+</table>
+<?php echo form_fieldset_close(); ?>
 
 <br>
 
-<input type="button" name="voltar" value="<< voltar">
-<input type="button" name="avancar" value="avançar >>">
+<?php
+$extra = 'onClick="passo2()"';
+echo form_button('voltar', '<< voltar', $extra);
+
+$extra = 'onClick="passo3()"';
+echo form_button('avancar', 'avançar >>', $extra);
+?>
+<?php echo form_close(); ?>
 
 </body>
 </html>

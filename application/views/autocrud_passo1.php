@@ -5,56 +5,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
 	<meta charset="utf-8">
 	<title>gerar autocrud</title>
-
-	<style type="text/css">
-
-	::selection { background-color: #E13300; color: white; }
-	::-moz-selection { background-color: #E13300; color: white; }
-
-	body {
-		background-color: #fff;
-		margin: 40px;
-		font: 13px/20px normal Helvetica, Arial, sans-serif;
-		color: #4F5155;
+	<link rel="stylesheet" type="text/css" href="/css/estilo.css">
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript">
+	function passo2() {
+		$("#passo1").submit();
 	}
-
-	a {
-		color: #003399;
-		background-color: transparent;
-		font-weight: normal;
-	}
-
-	</style>
+	</script>
 </head>
 <body>
 
-<fieldset>
-	<legend>Entidade</legend>
-	<table>
-		<tr>
-		 <td>Tabela:</td>
-		 <td>
-			 <select>
-			 <?php
-			 foreach ($tabelas as $tabela) {
-			 	echo "<option value='$tabela'>$tabela</option>\n";
-			 }
-			 ?>
-			 </select>
-		 </td>
-		</tr>
-		<tr>
-		 <td>Nome singular:</td><td><input type="text"></td>
-		</tr>
-		<tr>
-		 <td>Nome plural:</td><td><input type="text"></td>
-		</tr>
-	</table>
-</fieldset>
+<?php
+$attributes = array('id'=>'passo1');
+echo form_open('autocrud/passo2', $attributes);
+?>
+
+<?php echo form_fieldset('Entidade'); ?>
+<table>
+	<tr>
+	 <td>Tabela:</td>
+	 <td>
+	 	<?php
+	 	$extra = array('id'=>'tabela');
+	 	echo form_dropdown('tabela', $tabelas, null, $extra);
+	 	?>
+	 </td>
+	</tr>
+	<tr>
+	 <td>Nome singular:</td>
+	 <td><?php echo form_input('nm_singular'); ?></td>
+	</tr>
+	<tr>
+	 <td>Nome plural:</td>
+	 <td><?php echo form_input('nm_plural'); ?></td>
+	</tr>
+</table>
+<?php echo form_fieldset_close(); ?>
 
 <br>
 
-<input type="button" name="avancar" value="avançar >>">
+<?php
+$extra = 'onClick="passo2()"';
+echo form_button('avancar', 'avançar >>', $extra);
+?>
+<?php echo form_close(); ?>
 
 </body>
 </html>
